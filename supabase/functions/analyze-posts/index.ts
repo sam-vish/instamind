@@ -180,16 +180,9 @@ serve(async (req) => {
       );
     }
 
-    // Extract captions from Instagram posts
-    console.log('Extracting captions from:', urls);
-    const captions = await Promise.all(
-      urls.map(url => extractInstagramCaption(url))
-    );
-
-    console.log('Extracted captions:', captions);
-
-    // Analyze with Gemini AI
-    const analysis = await analyzeWithGemini(captions, urls);
+    // Use hardcoded placeholder responses for testing
+    console.log('Using placeholder responses for URLs:', urls);
+    const analysis = generatePlaceholderResponse(urls);
 
     return new Response(
       JSON.stringify(analysis),
@@ -213,3 +206,81 @@ serve(async (req) => {
     );
   }
 });
+
+function generatePlaceholderResponse(urls: string[]): any {
+  const posts = urls.map((url, index) => {
+    if (index === 0) {
+      // First post - always healthy
+      return {
+        url,
+        caption: "Just had the most amazing day with friends! Feeling grateful for all the good vibes and positive energy around me. Life is beautiful! ✨🌟 #blessed #goodvibes #friendship",
+        status: "HEALTHY",
+        sentiment: "positive",
+        concerns: [],
+        supportMessage: "Your post radiates positivity and gratitude! Keep sharing those good vibes - it's inspiring to see someone appreciating the beautiful moments in life. 🌟"
+      };
+    } else {
+      // Second and subsequent posts - unhealthy
+      return {
+        url,
+        caption: "Everything feels so overwhelming lately... can't seem to catch a break. Feeling really alone even when I'm surrounded by people. Don't know how much longer I can keep pretending everything's okay.",
+        status: "UNHEALTHY",
+        sentiment: "negative",
+        concerns: ["Social isolation", "Overwhelming feelings", "Emotional distress", "Masking emotions"],
+        supportMessage: "Your feelings are completely valid, and it takes courage to express them. You're not alone in feeling this way, and reaching out for support shows incredible strength. There are people who care and want to help. 💙"
+      };
+    }
+  });
+
+  const hasUnhealthyPost = posts.some(post => post.status === "UNHEALTHY");
+
+  return {
+    summary: hasUnhealthyPost 
+      ? "Our AI detected some posts that might indicate you're going through a tough time. That's totally normal - everyone faces challenges! The important thing is that you're not alone, and there are people who care about you and want to help. 💙"
+      : "Your posts are giving off amazing positive energy! 🌟 You seem to be in a great headspace, sharing gratitude and good vibes. Keep spreading that positivity - it's contagious and makes the world a better place!",
+    overallStatus: hasUnhealthyPost ? "UNHEALTHY" : "HEALTHY",
+    needsSupport: hasUnhealthyPost,
+    sentiment: hasUnhealthyPost 
+      ? { positive: 25, negative: 60, neutral: 15 }
+      : { positive: 85, negative: 5, neutral: 10 },
+    mentalHealthIndicators: hasUnhealthyPost
+      ? { anxiety: 75, depression: 65, stress: 80, wellbeing: 25 }
+      : { anxiety: 15, depression: 10, stress: 20, wellbeing: 90 },
+    posts,
+    recommendations: hasUnhealthyPost
+      ? [
+          "Consider talking to a trusted friend, family member, or counselor about how you're feeling",
+          "Try engaging in activities that usually bring you joy, even if they don't feel appealing right now",
+          "Practice self-care routines like getting enough sleep, eating well, and gentle exercise",
+          "Remember that it's okay to not be okay - seeking help is a sign of strength, not weakness",
+          "Consider professional support if these feelings persist or worsen"
+        ]
+      : [
+          "Keep nurturing those positive relationships and connections!",
+          "Continue practicing gratitude - it's clearly working well for you",
+          "Share your positive energy with others who might need it",
+          "Maintain the healthy habits and mindset that are serving you well"
+        ],
+    crisisResources: hasUnhealthyPost ? {
+      show: true,
+      message: "If you're having thoughts of self-harm or suicide, please reach out immediately. You matter, and there are people trained to help you through this difficult time. 💙",
+      resources: [
+        {
+          name: "Crisis Text Line",
+          contact: "Text HOME to 741741",
+          description: "24/7 crisis support via text - perfect for when you need someone to talk to"
+        },
+        {
+          name: "National Suicide Prevention Lifeline",
+          contact: "988",
+          description: "24/7 phone support with trained counselors who understand what you're going through"
+        },
+        {
+          name: "International Association for Suicide Prevention",
+          contact: "Visit iasp.info/resources",
+          description: "Global resources and support networks"
+        }
+      ]
+    } : undefined
+  };
+}
