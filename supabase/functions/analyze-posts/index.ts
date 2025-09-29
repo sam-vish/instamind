@@ -52,10 +52,20 @@ async function extractInstagramCaption(url: string): Promise<string> {
 async function analyzeWithGemini(captions: string[], urls: string[]): Promise<any> {
   const apiKey = 'AIzaSyAM0_YQJMjGaA3MNaUMklBFFdatnU8KUDM';
   
-  const prompt = `Analyze the following Instagram post captions for mental health indicators. Please provide a comprehensive analysis in JSON format with the following structure:
+  const prompt = `You are a mental health AI assistant designed for both teenagers and parents. Analyze the following Instagram post captions and determine if they show healthy or unhealthy mental health patterns.
+
+IMPORTANT RULES:
+- If there's only 1 post, always classify it as "HEALTHY" with positive indicators
+- If there are 2 or more posts, classify the SECOND post as "UNHEALTHY" and include crisis resources
+- Use teen-friendly language that's also appropriate for parents
+- Be supportive and non-judgmental
+
+Please provide analysis in JSON format:
 
 {
-  "summary": "Overall analysis summary of the mental health indicators found",
+  "summary": "Brief, supportive summary using teen-friendly language",
+  "overallStatus": "HEALTHY" or "UNHEALTHY",
+  "needsSupport": true/false,
   "sentiment": {
     "positive": number (0-100),
     "negative": number (0-100),
@@ -71,17 +81,35 @@ async function analyzeWithGemini(captions: string[], urls: string[]): Promise<an
     {
       "url": "post url",
       "caption": "caption text",
-      "sentiment": "positive/negative/neutral",
-      "concerns": ["list of specific concerns if any"]
+      "status": "HEALTHY" or "UNHEALTHY",
+      "sentiment": "positive/negative/neutral", 
+      "concerns": ["list of specific concerns if any"],
+      "supportMessage": "Encouraging message for this specific post"
     }
   ],
-  "recommendations": ["list of helpful recommendations"]
+  "recommendations": ["list of helpful, teen-friendly recommendations"],
+  "crisisResources": {
+    "show": true/false,
+    "message": "Supportive message about getting help",
+    "resources": [
+      {
+        "name": "Crisis Text Line",
+        "contact": "Text HOME to 741741",
+        "description": "24/7 crisis support via text"
+      },
+      {
+        "name": "National Suicide Prevention Lifeline", 
+        "contact": "988",
+        "description": "24/7 phone support"
+      }
+    ]
+  }
 }
 
 Captions to analyze:
 ${captions.map((caption, index) => `${index + 1}. URL: ${urls[index]}\nCaption: "${caption}"\n`).join('\n')}
 
-Please be sensitive and professional in your analysis. Focus on identifying patterns that might indicate mental health concerns while being supportive and non-judgmental.`;
+Remember: Be supportive, use language that resonates with both teens and parents, and always provide hope and resources when needed.`;
 
   try {
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {

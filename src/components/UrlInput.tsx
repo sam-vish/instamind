@@ -72,16 +72,19 @@ export const UrlInput: React.FC<UrlInputProps> = ({ onAnalyze, isLoading }) => {
       
       <div className="relative bg-black/40 backdrop-blur-xl border border-purple-500/30 rounded-3xl p-8 shadow-2xl">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center space-x-2 bg-purple-900/30 backdrop-blur-sm border border-purple-500/30 rounded-full px-4 py-2 mb-6">
-            <Sparkles className="w-4 h-4 text-purple-400 animate-pulse" />
-            <span className="text-purple-300 text-sm font-medium">Multi-Post Analysis</span>
+          <div className="inline-flex items-center space-x-3 bg-gradient-to-r from-cyan-900/40 to-purple-900/40 backdrop-blur-sm border border-cyan-500/30 rounded-full px-6 py-3 mb-8 shadow-xl">
+            <Sparkles className="w-5 h-5 text-cyan-400 animate-spin" />
+            <span className="text-cyan-300 text-sm font-bold tracking-wide">MULTI-POST VIBE CHECK</span>
+            <Upload className="w-5 h-5 text-pink-400 animate-bounce" />
           </div>
           
-          <h2 className="text-3xl font-bold text-white mb-3">
-            Analyze Instagram Posts
+          <h2 className="text-4xl font-black text-white mb-4 bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">
+            Drop Your Insta Links! 📱
           </h2>
-          <p className="text-gray-400 text-lg">
-            Add multiple Instagram post URLs to get comprehensive mental health insights
+          <p className="text-gray-300 text-xl font-medium max-w-2xl mx-auto">
+            Paste your Instagram post links below and we'll check if they're giving off 
+            <span className="text-green-400 font-bold"> healthy vibes </span> or 
+            <span className="text-orange-400 font-bold"> need some attention </span> 💙
           </p>
         </div>
 
