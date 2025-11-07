@@ -32,3 +32,11 @@ export interface AnalysisResult {
     }>;
   };
 }
+
+export interface ChatSession {
+  id: string;
+  urls: string[];
+  result: AnalysisResult;
+  timestamp: number;
+  title: string;
+}

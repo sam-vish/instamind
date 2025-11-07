@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Brain, Heart, Sparkles, ArrowRight, Shield, Zap, Target, Gamepad2, Users, Smartphone } from 'lucide-react';
+import { Brain, Heart, Sparkles, ArrowRight, Shield, Zap, Target, Gamepad2, Smartphone } from 'lucide-react';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -140,13 +140,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-70 transition-opacity duration-300 -z-10" />
-              </button>
-              
-              <button className="px-10 py-5 bg-white/10 backdrop-blur-sm border-2 border-cyan-400/30 rounded-2xl text-white font-bold text-xl hover:bg-white/20 hover:border-cyan-400/60 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-400/20">
-                <span className="flex items-center space-x-2">
-                  <Users className="w-5 h-5" />
-                  <span>See How It Works</span>
-                </span>
               </button>
             </div>
 

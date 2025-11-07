@@ -4,7 +4,7 @@ import { Brain, Heart, ArrowLeft } from 'lucide-react';
 export const Header: React.FC = () => {
   return (
     <header className="bg-black/20 backdrop-blur-md border-b border-purple-500/20 sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-6">
+      <div className="px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="relative group">
